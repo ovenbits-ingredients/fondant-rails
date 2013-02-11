@@ -1,24 +1,12 @@
-# Fondant::Rails
+# FondantRails
 
-TODO: Write a gem description
+Use [fondant](https://github.com/ovenbits-ingredients/fondant) in Rails' asset pipeline.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
     gem 'fondant-rails'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install fondant-rails
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Contributing
 

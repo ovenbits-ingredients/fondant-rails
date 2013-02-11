@@ -1,4 +1,4 @@
-Copyright (c) 2013 Phillip Ridlen
+Copyright (c) 2013 Oven Bits
 
 MIT License
 

@@ -2,6 +2,7 @@ require "fondant-rails/version"
 
 module Fondant
   module Rails
-    # Your code goes here...
+    class Engine < ::Rails::Engine
+    end
   end
 end
