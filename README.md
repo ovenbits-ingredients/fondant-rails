@@ -1,4 +1,4 @@
-# FondantRails
+# Fondant for Rails' Asset Pipeline
 
 Use [fondant](https://github.com/ovenbits-ingredients/fondant) in Rails' asset pipeline.
 
