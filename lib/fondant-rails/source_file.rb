@@ -14,6 +14,7 @@ class SourceFile < Thor
     bump_version
   end
 
+  desc 'clean up source files', 'remove source files no longer needed'
   def cleanup
     self.destination_root = 'vendor/assets'
     remove_file 'VERSION'
