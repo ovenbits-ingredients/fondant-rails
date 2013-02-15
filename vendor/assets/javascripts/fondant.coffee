@@ -1,4 +1,4 @@
-# ## Fondant v0.2.4
+# ## Fondant v0.3.0
 #
 # The icing on the cake for user input. A simple jQuery HTML5 WYSIWYG editor
 # using `contenteditable`.
@@ -112,8 +112,10 @@ $ ->
     #
     bindToolbar: ->
       for action in @actions
-        $("[data-action='#{ @type }-#{ action }']").on 'click.fondant',
-          $.proxy(@[action], this)
+        $button = $("[data-action='#{ @type }-#{ action }']")
+        $button.on 'click.fondant', { action: action, editor: this }, (event) ->
+          event.preventDefault()
+          event.data.editor[event.data.action]()
 
     # ### unbindToolbar()
     #
@@ -288,7 +290,8 @@ $ ->
     #
     custom: (html) ->
       if navigator.appName == "Microsoft Internet Explorer"
-        console.log "Custom HTML not yet implemented"
+        range = document.selection.createRange()
+        range.pasteHTML(html)
       else
         @applyFormat 'insertHTML', html
 
