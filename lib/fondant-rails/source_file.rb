@@ -7,8 +7,8 @@ class SourceFile < Thor
   def fetch
     self.destination_root = 'vendor/assets'
     remote = 'https://raw.github.com/ovenbits-ingredients/fondant/master'
-    get "#{remote}/fondant.coffee", 'javascripts/fondant.coffee'
-    get "#{remote}/fondant.scss", 'stylesheets/fondant.scss'
+    get "#{remote}/src/fondant.coffee", 'javascripts/fondant.coffee'
+    get "#{remote}/src/fondant.scss", 'stylesheets/fondant.scss'
     get "#{remote}/VERSION", 'VERSION'
 
     bump_version
