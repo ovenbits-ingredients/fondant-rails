@@ -28,6 +28,9 @@ class SourceFile < Thor
       gsub_file '../../lib/fondant-rails/version.rb', /VERSION\s=\s'(\d|\.)+'$/ do |match|
         %Q{VERSION = '#{version}'}
       end
+      gsub_file '../../README.md', /gem 'fondant-rails', '~>\s(\d|\.)+'/ do |match|
+        %Q{gem 'fondant-rails', '~> #{version}'}
+      end
     end
   end
 end
