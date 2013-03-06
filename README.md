@@ -6,7 +6,7 @@ Use [fondant](https://github.com/ovenbits-ingredients/fondant) in Rails' asset p
 
 Add this line to your application's Gemfile:
 
-    gem 'fondant-rails', '~> 0.5.0'
+    gem 'fondant-rails', '~> 0.6.0'
 
 ## Contributing
 

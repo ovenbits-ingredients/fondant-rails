@@ -1,4 +1,4 @@
-# ## Fondant v0.5.0
+# ## Fondant v0.6.0
 #
 # The icing on the cake for user input. A simple jQuery HTML5 WYSIWYG editor
 # using `contenteditable`.
@@ -38,6 +38,12 @@
 #   a toolbar and you are responsible for building and wiring up your own.
 #   (default: `true`)
 #
+# * `buttons` - An array of commands to include as buttons. Links & custom html cannot be
+#   automatically addes as a toolbar button because there needs to be some form of input between
+#   the button click and the application. Everything else is available to use.
+#   (default: [ 'bold', 'italic', 'p', 'h1', 'h2', 'h3', 'h4', 'blockquote', 'ol', 'ul', 'indent',
+#   'outdent', 'remove', 'unlink', 'undo', 'redo' ]`)
+#
 
 
 $ = jQuery
@@ -50,6 +56,7 @@ if typeof $ isnt 'undefined'
   # is called.
   #
   class Fondant
+    version: "0.6.0"
 
     # ## Methods
 
@@ -120,7 +127,7 @@ if typeof $ isnt 'undefined'
     #
     bindToolbar: ->
       for action in @actions
-        $button = $("[data-action='#{ @type }-#{ action }']")
+        $button = $("##{ @type }-#{ @id } [data-action='#{ @type }-#{ action }']")
         $button.on 'click.fondant', { action: action, editor: this }, (event) ->
           event.preventDefault()
           event.data.editor[event.data.action]()
@@ -131,7 +138,7 @@ if typeof $ isnt 'undefined'
     # this is not needed since the DOM elements will be destroyed
     #
     unbindToolbar: ->
-      $("[data-action^='#{ @type }-']").off('.fondant') unless @options.toolbar
+      $("##{ @type }-#{ @id } [data-action^='#{ @type }-']").off('.fondant') unless @options.toolbar
 
     # ### removeToolbar()
     #
@@ -397,33 +404,13 @@ if typeof $ isnt 'undefined'
       # ### templates.toolbar()
       #
       toolbar: ->
-        group = @toolbarClass() + '-button-group'
         button = @toolbarClass() + '-button'
-        """
-        <ul class="#{ @toolbarClass() }">
-          <li class="#{ group }-label">Text Styles</li>
-          <ul class="#{ group }">
-            <li class="#{ button } #{ button }-bold"><a href="#" data-action="#{ @fondant.type }-bold">B</a></li>
-            <li class="#{ button } #{ button }-italic"><a href="#" data-action="#{ @fondant.type }-italic">I</a></li>
-          </ul>
-          <li class="#{ group }-label">Block Styles</li>
-          <ul class="#{ group }">
-            <li class="#{ button } #{ button }-p"><a href="#" data-action="#{ @fondant.type }-p">P</a></li>
-            <li class="#{ button } #{ button }-h1"><a href="#" data-action="#{ @fondant.type }-h1">H1</a></li>
-            <li class="#{ button } #{ button }-h2"><a href="#" data-action="#{ @fondant.type }-h2">H2</a></li>
-            <li class="#{ button } #{ button }-h3"><a href="#" data-action="#{ @fondant.type }-h3">H3</a></li>
-            <li class="#{ button } #{ button }-h4"><a href="#" data-action="#{ @fondant.type }-h4">H4</a></li>
-            <li class="#{ button } #{ button }-blockquote"><a href="#" data-action="#{ @fondant.type }-blockquote">Quote</a></li>
-          </ul>
-          <li class="#{ group }-label">Lists</li>
-          <ul class="#{ group }">
-            <li class="#{ button } #{ button }-ol"><a href="#" data-action="#{ @fondant.type }-ol">Numbers</a></li>
-            <li class="#{ button } #{ button }-ul"><a href="#" data-action="#{ @fondant.type }-ul">Bullets</a></li>
-            <li class="#{ button } #{ button }-indent"><a href="#" data-action="#{ @fondant.type }-indent">Increase Indent</a></li>
-            <li class="#{ button } #{ button }-outdent"><a href="#" data-action="#{ @fondant.type }-outdent">Decrease Indent</a></li>
-          </ul>
-        </ul>
-        """
+        html = """<ul class="#{ @toolbarClass() }">"""
+        for action in @fondant.options.buttons
+          html += """<li class="#{ button } #{ button }-#{ action }">"""
+          html += """<a href="#" data-action="#{ @fondant.type }-#{ action }">#{ action }</a>"""
+          html += """</li>"""
+        html
 
   window.Fondant = Fondant
 
@@ -465,4 +452,10 @@ if typeof $ isnt 'undefined'
   $.fn.fondant.defaults =
     prefix: 'fondant'
     toolbar: true
+    buttons: [
+      'bold', 'italic',
+      'p', 'h1', 'h2', 'h3', 'h4', 'blockquote',
+      'ol', 'ul', 'indent', 'outdent',
+      'remove', 'unlink', 'undo', 'redo'
+    ]
 
